@@ -1,19 +1,24 @@
 package airPlaneSImulator;
 
+
+
 public class AirplaneSimulation {
 	
 	public static void main(String[] args) {
-		Route route1 = new Route("Mexicali","Tijuana",10,500);
+		Route route1 = new Route("Mexicali","Tijuana",1,500);
 		Country Mexico = new Country("Mexico");
-		
-		/*Route route2 = new Route("Mexicali","Ensenada");
-		Route route3 = new Route("Mexicali","Tecate");
-		System.out.println(route1.getId());
-		System.out.println(route1.getRouteName());
-		System.out.println(route1.getCost());*/
-		
+		Passenger alejandro = new Passenger("Alejandro", "Tello", 1994, 7, 17, "Mexican");
+		Passenger andrea = new Passenger("Andrea", "Tello", 1993, 2, 13, "Mexican");
+
 		Mexico.addCity("Mexicali");
-		System.out.println(Mexico.cityExists("mexicali"));
+		route1.addPassenger(alejandro);
+		route1.addPassenger(andrea);
+		route1.removePassenger(alejandro);
+		route1.removePassenger(andrea);
+		System.out.println(route1.getSeatSpace());
+
+		 
+
 
 		
 	}//main

@@ -1,5 +1,7 @@
 package airPlaneSImulator;
 
+import java.util.ArrayList;
+
 public class Route {
 	private String origin;
 	private String destination;
@@ -8,22 +10,15 @@ public class Route {
 	private static int idCounter = 1; 
 	private int cost = 0; 
 	private int seatSpace=0;
-	
-	public Route(String origin, String destination, int seatSpace) {
-		this.origin = origin;
-		this.destination = destination;
-		routeName = this.origin + " - " + this.destination;
-		id = idCounter++;
-		setSeatSpace(seatSpace);
-	}
+	private ArrayList<Passenger> passengerList = new ArrayList<Passenger>();
 	
 	public Route(String origin, String destination,int seatSpace, int cost) {
 		this.origin = origin;
 		this.destination = destination;
 		routeName = this.origin + " - " + this.destination;
 		id = idCounter++;
-		setCost(cost);
 		setSeatSpace(seatSpace);
+		setCost(cost);
 	}
 	
 	public String getRouteName(){
@@ -54,15 +49,33 @@ public class Route {
 		return this.seatSpace; 
 	}
 	
-	public void setPassangers(int passangers) {
-		int seatSpace = this.getSeatSpace();
-		if(seatSpace >= passangers) {
-			this.seatSpace = this.seatSpace-passangers;
-			System.out.println("Added "+passangers+" passengers to the route "+this.getRouteName());
-			System.out.println("Remaining seats: "+ this.seatSpace);
+	public void addPassenger(Passenger passenger) {
+		if(getSeatSpace() > 0) {
+			passengerList.add(passenger);
+			reduceSeat(1);
+			System.out.println("Added passenger: "+passenger.getName()+" to the route "+this.getRouteName());
+			System.out.println("Remaining available seats: "+this.getSeatSpace());
 		}else {
-			System.out.println("Sorry there are not available seats to cover your requests");
+			System.out.println("There are no seats available");
 		}
+	}
+	
+	public void removePassenger(Passenger passenger) {
+		if(passengerList.contains(passenger)) {
+			passengerList.remove(passenger);
+			System.out.println("Passenger: "+passenger.getName()+" was removed succesfully");
+			increaseSeat(1);
+		}else {
+			System.out.println("Passenger is not in this route");
+		}
+	}
+	
+	private void increaseSeat(int numberSeats) {
+		seatSpace += numberSeats;
+	}
+	
+	private void reduceSeat(int numberSeats) {
+		seatSpace -= numberSeats;
 	}
 
 }
