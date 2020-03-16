@@ -21,5 +21,5 @@ public class AirplaneSimulation {
 
 
 		
-	}//main method
+	}//main methods
 }
