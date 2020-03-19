@@ -1,25 +1,37 @@
 package airPlaneSImulator;
 
+import java.sql.SQLException;
+
+
+import insertData.InsertCityData;
+import insertData.InsertPassangerData;
+import insertData.InsertRouteData;
+import tables.CityManager;
+import tables.PassengersManager;
+import tables.RouteManager;
+
 
 
 public class AirplaneSimulation {
 	
-	public static void main(String[] args) {
-		Route route1 = new Route("Mexicali","Tijuana",1,500);
-		Country Mexico = new Country("Mexico");
-		Passenger alejandro = new Passenger("Alejandro", "Tello", 1994, 7, 17, "Mexican");
-		Passenger andrea = new Passenger("Andrea", "Tello", 1993, 2, 13, "Mexican");
+	/*private static final String USERNAME = "dbuser";
+	private static final String PASSWORD = "dbpassword";
+	private static final String CONN_STRING =
+				"jdbc:mysql://localhost/airplanesim";*/
+	
+	public static void main(String[] args) throws SQLException {
+		
 
-		Mexico.addCity("Mexicali");
-		route1.addPassenger(alejandro);
-		route1.addPassenger(andrea);
-		route1.removePassenger(alejandro);
-		route1.removePassenger(andrea);
-		System.out.println(route1.getSeatSpace());
-
-		 
+		//Country Mexico = new Country("Mexico");
+		//PassengersManager.displayAllRows();
+		//InsertCityData.insert();
+		//CityManager.displayAllRows();
+		InsertRouteData.insert();
+		//InsertCityData.insert();
+		RouteManager.displayAllRows();
+		//InsertPassangerData.insert();
 
 
 		
-	}//main methods
+	}
 }

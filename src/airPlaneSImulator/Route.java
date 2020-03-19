@@ -12,13 +12,17 @@ public class Route {
 	private int seatSpace=0;
 	private ArrayList<Passenger> passengerList = new ArrayList<Passenger>();
 	
-	public Route(String origin, String destination,int seatSpace, int cost) {
-		this.origin = origin;
-		this.destination = destination;
-		routeName = this.origin + " - " + this.destination;
-		id = idCounter++;
-		setSeatSpace(seatSpace);
-		setCost(cost);
+	public Route(Country originCountry, Country destinationCountry, String originCity, String destinationCity, int seatSpace, int cost) {
+		if(originCountry.cityExists(originCity) && originCountry.cityExists(destinationCity)){
+			this.origin = originCity;
+			this.destination =  destinationCity;
+			routeName = this.origin + " - " + this.destination;
+			id = idCounter++;
+			setSeatSpace(seatSpace);
+			setCost(cost);
+		}else {
+			throw new IllegalArgumentException("City doesn't exists");
+		}
 	}
 	
 	public String getRouteName(){
