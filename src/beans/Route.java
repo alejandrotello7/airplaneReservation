@@ -1,17 +1,11 @@
 package beans;
 
 public class Route {
-	private int id;
+
 	private String name;
 	private String origin;
 	private String destination;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public String getName() {
 		return name;
 	}

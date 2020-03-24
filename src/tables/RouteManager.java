@@ -24,10 +24,9 @@ public class RouteManager {
 			System.out.println("------------------------");
 			while (rs.next()) {
 
-				System.out.println("ID: "+rs.getInt(1));
-				System.out.println("Route name: "+rs.getString(2));
-				System.out.println("Origin name: "+rs.getString(3));
-				System.out.println("Destination: "+rs.getString(4));
+				System.out.println("Route name: "+rs.getString(1));
+				System.out.println("Origin name: "+rs.getString(2));
+				System.out.println("Destination: "+rs.getString(3));
 				System.out.println("------------------------");
 
 			}
@@ -45,17 +44,8 @@ public class RouteManager {
 			stmt.setString(1,bean.getName());
 			stmt.setString(2, bean.getOrigin());
 			stmt.setString(3, bean.getDestination());
-			int affected = stmt.executeUpdate();
-			
-			if(affected > 0) {
-				keys =stmt.getGeneratedKeys();
-				keys.next();
-				int newKey = keys.getInt(1);
-				bean.setId(newKey);
-			} else {
-				System.err.println("No rows affected");
-				return false;
-			}
+
+			stmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -66,6 +56,48 @@ public class RouteManager {
 		return true;
 		
 	}
+	
+	public static boolean isValid(String origin, String destination) throws SQLException{
+		String sql = "SELECT * FROM ROUTES";
+		try (
+				Connection conn = DBUtil.getConnection(DBType.MYSQL);
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				){
+
+			while (rs.next()) {
+
+				if(origin.equalsIgnoreCase(rs.getString(2)) && destination.equalsIgnoreCase(rs.getString(3))){
+					return true;
+				}
+
+			}
+			return false;
+
+		}
+	}
+	
+	public static String getRouteName(String origin, String destination) throws SQLException{
+		String sql = "SELECT * FROM ROUTES";
+		try (
+				Connection conn = DBUtil.getConnection(DBType.MYSQL);
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				){
+
+			while (rs.next()) {
+
+				if(origin.equalsIgnoreCase(rs.getString(2)) && destination.equalsIgnoreCase(rs.getString(3))){
+					return rs.getString(1);
+				}
+
+			}
+			return null;
+		
+
+		}
+	}
+	
 
 
 }

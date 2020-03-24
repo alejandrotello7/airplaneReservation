@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 import beans.Passenger;
 import utils.DBType;
@@ -75,5 +76,42 @@ public class PassengersManager {
 		}
 		return true;
 		
+	}
+	
+	public static boolean isValid(String firstName,String lastName,LocalDate birthDate) throws SQLException {
+		
+		String sql = "SELECT * FROM PASSENGERS";
+		try (
+				Connection conn = DBUtil.getConnection(DBType.MYSQL);
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				){
+
+			while (rs.next()) {
+				
+				if(firstName.equalsIgnoreCase(rs.getString(2)) && lastName.equalsIgnoreCase(rs.getString(4)) && birthDate.toString().equals(rs.getString(5))) {
+					return true;
+				}	
+			}
+		}
+		return false;
+	}
+	
+	public static int getId(String firstName,String lastName,LocalDate birthDate) throws SQLException {
+		
+		String sql = "SELECT * FROM PASSENGERS";
+		try (
+				Connection conn = DBUtil.getConnection(DBType.MYSQL);
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				){
+
+			while (rs.next()) {
+				if(firstName.equalsIgnoreCase(rs.getString(2)) && lastName.equalsIgnoreCase(rs.getString(4)) && birthDate.toString().equals(rs.getString(5))){
+					return rs.getInt(1);
+				}	
+			}
+		}
+		return 0;
 	}
 }
